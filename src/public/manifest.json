@@ -1,0 +1,20 @@
+{
+  "name": "FitMate - AI Strength & Nutrition Honduras",
+  "short_name": "FitMate",
+  "description": "Nutricionista Deportivo con IA, Entrenador Personal Inteligente y Red Social Fitness para Atletas en Honduras",
+  "start_url": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#000000",
+  "theme_color": "#000000",
+  "icons": [
+    {
+      "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='22' fill='%23000000'/><path d='M50 12 L24 54 L46 54 L36 88 L76 44 L54 44 Z' fill='%23ffffff'/></svg>",
+      "sizes": "192x192 512x512",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["fitness", "health", "sports", "lifestyle"],
+  "lang": "es-HN"
+}

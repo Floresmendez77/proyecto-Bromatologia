@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<!--
+  @license MIT
+  Copyright (c) 2026 FitMate Contributors
+  Licensed under the MIT License. See LICENSE file in the project root.
+-->
+<html lang="es" dir="ltr" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="FitMate: Nutricionista deportivo con IA, escáner de comidas por foto, entrenador personal inteligente y red social de GymPartners en Honduras.">
+  <meta name="theme-color" content="#000000">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="FitMate">
+  <link rel="icon" href="data:,">
+  <link rel="manifest" href="/manifest.json">
+  <title>FitMate | AI Nutritionist, Strength Coach & GymPartners</title>
+  <!-- Google Fonts: Space Grotesk, JetBrains Mono & Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600;700&family=Orbitron:wght@700;800;900&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body class="fitmate-body">
+  <a href="#main-app-content" class="skip-link">Saltar al contenido principal</a>
+
+  <!-- Layout Container -->
+  <div class="app-layout">
+
+    <!-- Desktop Sidebar Navigation -->
+    <aside class="sidebar-desktop" role="navigation" aria-label="Navegación principal">
+      <div class="sidebar-brand">
+        <span class="brand-logo-glow" aria-hidden="true">⚡</span>
+        <div>
+          <span class="brand-name">FITMATE</span>
+          <span class="brand-tagline">AI STRENGTH & NUTRITION</span>
+        </div>
+      </div>
+
+      <nav class="sidebar-nav">
+        <button id="nav-btn-dashboard" class="nav-item active" type="button" data-view="dashboard">
+          <span class="nav-icon" aria-hidden="true">📊</span>
+          <span class="nav-label">Dashboard</span>
+        </button>
+        <button id="nav-btn-scanner" class="nav-item" type="button" data-view="scanner">
+          <span class="nav-icon" aria-hidden="true">📸</span>
+          <span class="nav-label">Escanear Comida</span>
+        </button>
+        <button id="nav-btn-trainer" class="nav-item" type="button" data-view="trainer">
+          <span class="nav-icon" aria-hidden="true">🏋️‍♂️</span>
+          <span class="nav-label">Entrenador IA</span>
+        </button>
+        <button id="nav-btn-gyms" class="nav-item" type="button" data-view="gyms">
+          <span class="nav-icon" aria-hidden="true">🏢</span>
+          <span class="nav-label">Mi Gimnasio</span>
+        </button>
+        <button id="nav-btn-supplements" class="nav-item" type="button" data-view="supplements">
+          <span class="nav-icon" aria-hidden="true">💊</span>
+          <span class="nav-label">Suplementos</span>
+        </button>
+        <button id="nav-btn-social" class="nav-item" type="button" data-view="social">
+          <span class="nav-icon" aria-hidden="true">🤝</span>
+          <span class="nav-label">GymPartners</span>
+        </button>
+        <button id="nav-btn-profile" class="nav-item" type="button" data-view="profile">
+          <span class="nav-icon" aria-hidden="true">⚙️</span>
+          <span class="nav-label">Mi Perfil</span>
+        </button>
+      </nav>
+
+      <!-- Sidebar Footer User Card -->
+      <div class="sidebar-user-card glass-card">
+        <div class="user-card-avatar" id="sidebar-user-avatar">⚡</div>
+        <div class="user-card-info">
+          <span class="user-card-name" id="sidebar-user-name">Atleta Catracho</span>
+          <span class="user-card-gym" id="sidebar-user-gym">📍 Smart Fit Cascadas</span>
+        </div>
+        <div class="streak-badge" title="Días consecutivos entrenando o registrando">
+          <span aria-hidden="true">🔥</span> <span id="sidebar-streak-count">7</span>
+        </div>
+      </div>
+    </aside>
+
+    <!-- App Main Body Area -->
+    <div class="app-main-wrapper">
+      <!-- Top Navigation Bar -->
+      <header class="top-bar glass-card" role="banner">
+        <div class="top-bar-left">
+          <h1 id="view-title" class="current-view-heading">Dashboard Diario</h1>
+        </div>
+        <div class="top-bar-right">
+          <div class="active-gym-pill" id="top-active-gym-pill" title="Gimnasio actualmente activo">
+            <span aria-hidden="true">🏢</span> <span id="top-gym-name">Smart Fit Cascadas</span>
+          </div>
+          <button id="auth-btn" class="btn btn-secondary btn-xs" type="button" aria-label="Cuenta de usuario">
+            <span id="auth-btn-icon" aria-hidden="true">👤</span> <span id="auth-btn-text">Iniciar Sesión</span>
+          </button>
+          <button id="theme-toggle-btn" class="btn-icon-glass" type="button" aria-label="Cambiar tema de color" aria-pressed="true">
+            <span id="theme-icon" aria-hidden="true">🌙</span>
+          </button>
+        </div>
+      </header>
+
+      <!-- Main Dynamic Content Views -->
+      <main id="main-app-content" class="main-content-scroll" role="main">
+        <!-- Live screen reader announcements -->
+        <div id="sr-announcer" class="sr-only" aria-live="polite" aria-atomic="true"></div>
+
+        <!-- ==================== VIEW 1: DASHBOARD ==================== -->
+        <section id="view-dashboard" class="app-view">
+          <!-- Top Row: Animated Macro Rings & AI Coach Verdict -->
+          <div id="dashboard-macros-container" class="mb-4"></div>
+
+          <!-- Multi-column Dashboard Layout -->
+          <div class="dashboard-columns">
+            <!-- Left Column: Daily Meals Log & Quick Add -->
+            <div class="dashboard-col-left">
+              <div class="glass-card mb-4">
+                <div class="card-header-flex">
+                  <h3 class="section-subheading">🥗 Registro de Comidas de Hoy</h3>
+                  <button id="quick-scan-btn" class="btn btn-primary btn-sm" type="button">
+                    <span aria-hidden="true">📷</span> Escanear Plato
+                  </button>
+                </div>
+                <div id="daily-meals-container" class="mt-3"></div>
+              </div>
+
+              <!-- Quick Honduran Food Search Widget -->
+              <div class="glass-card">
+                <h3 class="section-subheading mb-2">🔍 Búsqueda Rápida de Comidas (Catrachas & Fitness)</h3>
+                <div class="search-input-wrap">
+                  <input id="quick-food-search" type="search" class="field-input" placeholder="Buscar baleada, plátano, pollo, frijoles, avena...">
+                </div>
+                <div id="quick-food-results" class="mt-2"></div>
+              </div>
+            </div>
+
+            <!-- Right Column: Training Routine Snapshot & GymPartner Spotlight -->
+            <div class="dashboard-col-right">
+              <div class="glass-card mb-4">
+                <div class="card-header-flex">
+                  <h3 class="section-subheading">🏋️‍♂️ Sesión de Hoy</h3>
+                  <button id="goto-trainer-btn" class="btn btn-secondary btn-sm" type="button">Ver Rutina Completa</button>
+                </div>
+                <div id="dashboard-routine-snapshot" class="mt-2"></div>
+              </div>
+
+              <!-- GymPartner Spotlight -->
+              <div class="glass-card">
+                <div class="card-header-flex">
+                  <h3 class="section-subheading">🤝 GymPartner Recomendado</h3>
+                  <button id="goto-social-btn" class="btn btn-secondary btn-sm" type="button">Comunidad</button>
+                </div>
+                <div id="dashboard-partner-spotlight" class="mt-2"></div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ==================== VIEW 2: FOOD SCANNER ==================== -->
+        <section id="view-scanner" class="app-view hidden">
+          <div class="section-hero mb-4">
+            <h2 class="neon-title-cyan">Escáner de Comida con Visión IA</h2>
+            <p class="text-muted">Toma una foto con tu cámara o sube una imagen de tu platillo para detectar ingredientes, conteo de unidades y porciones nutricionales.</p>
+          </div>
+
+          <!-- Capture Options Card -->
+          <div class="glass-card scanner-card mb-4">
+            <!-- Live Camera Area (collapsible with Laser Reticle HUD) -->
+            <div id="camera-live-box" class="camera-live-box hidden">
+              <div class="camera-viewfinder-hud">
+                <video id="webcam-video" autoplay playsinline muted class="camera-preview"></video>
+                <div class="viewfinder-reticle" aria-hidden="true"></div>
+                <div class="viewfinder-laser" aria-hidden="true"></div>
+              </div>
+              <div class="camera-controls mt-3 text-center">
+                <button id="capture-snapshot-btn" class="btn btn-primary btn-glow" type="button">
+                  <span aria-hidden="true">📸</span> Capturar Foto
+                </button>
+                <button id="close-camera-btn" class="btn btn-secondary" type="button">Cerrar Cámara</button>
+              </div>
+            </div>
+
+            <!-- Upload Dropzone -->
+            <div id="dropzone" class="dropzone" role="region" aria-label="Zona de carga o escaneo de alimentos" tabindex="0">
+              <div class="dropzone-icon" aria-hidden="true">📷</div>
+              <h3 class="dropzone-title">Arrastra una fotografía de tu plato</h3>
+              <p class="dropzone-desc text-muted">O utiliza las opciones directas:</p>
+              <div class="upload-buttons-row mt-3">
+                <button id="start-webcam-btn" class="btn btn-primary" type="button">
+                  <span aria-hidden="true">📹</span> Abrir Cámara en Vivo
+                </button>
+                <label for="camera-direct-input" class="btn btn-secondary">
+                  <span aria-hidden="true">📸</span> Cámara Móvil
+                </label>
+                <input id="camera-direct-input" type="file" accept="image/jpeg,image/png,image/webp" capture="environment" class="file-input-hidden">
+                <label for="file-input" class="btn btn-secondary">
+                  <span aria-hidden="true">📁</span> Galería / Archivo
+                </label>
+                <input id="file-input" type="file" accept="image/jpeg,image/png,image/webp" class="file-input-hidden">
+              </div>
+              <span class="dropzone-formats text-muted mt-2">JPEG, PNG o WebP (Comprimido automáticamente a 1024px)</span>
+            </div>
+
+            <!-- Preview Card -->
+            <div id="scan-preview-panel" class="scan-preview-panel glass-card mt-4 hidden">
+              <div class="preview-flex">
+                <img id="scan-preview-img" alt="Vista previa de la comida cargada" class="scan-preview-thumb">
+                <div class="preview-meta">
+                  <h4 id="scan-preview-name" class="font-bold">Muestra lista para análisis</h4>
+                  <p id="scan-preview-dims" class="text-muted text-sm"></p>
+                  <button id="run-ai-scan-btn" class="btn btn-primary btn-glow mt-3" type="button">
+                    <span aria-hidden="true">⚡</span> Analizar con Gemini 3.8 Flash
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Loading State Indicator -->
+          <div id="scan-loading-state" class="glass-card text-center p-5 hidden">
+            <div class="spinner mb-3" aria-hidden="true"></div>
+            <h3 class="neon-title-cyan">Identificando Alimentos y Contando Unidades...</h3>
+            <p class="text-muted mt-1">El modelo analiza porción neta, macronutrientes y alternativas fitness de preparación.</p>
+          </div>
+
+          <!-- AI Results Container -->
+          <div id="scan-results-container"></div>
+        </section>
+
+        <!-- ==================== VIEW 3: AI TRAINER ==================== -->
+        <section id="view-trainer" class="app-view hidden">
+          <div class="section-hero-flex mb-4">
+            <div>
+              <h2 class="neon-title-lime">Entrenador Personal de IA</h2>
+              <p class="text-muted">Rutinas semanales con selección de máquinas, sobrecarga progresiva automática y consejos biomecánicos.</p>
+            </div>
+            <button id="generate-ai-routine-btn" class="btn btn-primary btn-glow" type="button">
+              <span aria-hidden="true">⚡</span> Regenerar Rutina con IA
+            </button>
+          </div>
+
+          <!-- Routine Container -->
+          <div id="routine-container"></div>
+        </section>
+
+        <!-- ==================== VIEW 4: GYMS & EQUIPMENT ==================== -->
+        <section id="view-gyms" class="app-view hidden">
+          <div id="gyms-container"></div>
+        </section>
+
+        <!-- ==================== VIEW 5: SUPPLEMENTS ==================== -->
+        <section id="view-supplements" class="app-view hidden">
+          <div id="supplements-container"></div>
+        </section>
+
+        <!-- ==================== VIEW 6: SOCIAL (GYMPARTNERS) ==================== -->
+        <section id="view-social" class="app-view hidden">
+          <div id="social-container"></div>
+        </section>
+
+        <!-- ==================== VIEW 7: PROFILE & ONBOARDING ==================== -->
+        <section id="view-profile" class="app-view hidden">
+          <div id="profile-container"></div>
+        </section>
+      </main>
+
+      <!-- App Footer -->
+      <footer class="app-footer" role="contentinfo">
+        <p>FitMate AI • Nutrición & Entrenamiento Basado en Evidencia • Tegucigalpa, Honduras</p>
+      </footer>
+    </div>
+
+    <!-- Mobile Bottom Navigation Bar -->
+    <nav class="bottom-nav-mobile glass-card" role="navigation" aria-label="Navegación móvil">
+      <button class="bottom-nav-btn active" type="button" data-view="dashboard">
+        <span class="bnav-icon" aria-hidden="true">📊</span>
+        <span class="bnav-label">Dashboard</span>
+      </button>
+      <button class="bottom-nav-btn" type="button" data-view="scanner">
+        <span class="bnav-icon" aria-hidden="true">📸</span>
+        <span class="bnav-label">Escanear</span>
+      </button>
+      <button class="bottom-nav-btn" type="button" data-view="trainer">
+        <span class="bnav-icon" aria-hidden="true">🏋️‍♂️</span>
+        <span class="bnav-label">Rutina</span>
+      </button>
+      <button class="bottom-nav-btn" type="button" data-view="social">
+        <span class="bnav-icon" aria-hidden="true">🤝</span>
+        <span class="bnav-label">Partners</span>
+      </button>
+      <button class="bottom-nav-btn" type="button" data-view="profile">
+        <span class="bnav-icon" aria-hidden="true">⚙️</span>
+        <span class="bnav-label">Perfil</span>
+      </button>
+    </nav>
+
+  </div>
+
+  <!-- Authentication Modal / Screen -->
+  <div id="auth-overlay" class="auth-overlay hidden" role="dialog" aria-modal="true" aria-labelledby="auth-modal-title">
+    <div class="auth-card glass-spotlight-card">
+      <div class="auth-card-brand">
+        <span class="auth-brand-logo" aria-hidden="true">⚡</span>
+        <h2 id="auth-modal-title" class="auth-brand-title">FITMATE</h2>
+        <span class="auth-brand-tagline">AI STRENGTH & NUTRITION</span>
+      </div>
+      <div class="auth-card-body">
+        <h3 class="auth-heading">Bienvenido, Atleta</h3>
+        <p class="auth-subtext">Inicia sesión con Google para sincronizar tus rutinas con IA, escaneos bromatológicos y progreso de fuerza en la nube.</p>
+        <div id="auth-error-msg" class="auth-error-box hidden" role="alert"></div>
+        <button id="google-signin-btn" class="btn btn-primary btn-block mb-3" type="button">
+          <svg class="google-icon" width="18" height="18" viewBox="0 0 24 24" aria-hidden="true">
+            <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+            <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+            <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"/>
+            <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"/>
+          </svg>
+          <span>Continuar con Google</span>
+        </button>
+        <button id="guest-continue-btn" class="btn btn-secondary btn-block btn-xs" type="button">
+          <span>Continuar en Modo Offline (Invitado)</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script type="module" src="/app.js"></script>
+</body>
+</html>
